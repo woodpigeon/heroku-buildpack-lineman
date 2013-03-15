@@ -235,6 +235,9 @@ if [ ! -d $APACHE_PATH ]; then
   curl --silent --max-time 60 --location $APACHE_URL | tar xz
 fi
 
+#copy in the httpd.conf from the buildpack
+cp $BIN_DIR/../conf/httpd.conf $APACHE_PATH/conf/httpd.conf
+
 
 cat >>boot.sh <<EOF
 export LD_LIBRARY_PATH=/app/apache/lib/
