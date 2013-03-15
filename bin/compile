@@ -187,7 +187,8 @@ echo "export PATH=\"\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\"" > $BUILD_DIR/.
 # build website with lineman
 echo "-----> Building static web assets with lineman"
 cd $BUILD_DIR
-$BUILD_DIR/node_modules/.bin/lineman build --stack --force
+mkdir -p dist/js
+$BUILD_DIR/node_modules/.bin/lineman build --stack
 echo "Web assets built" | indent
 
 #######################
