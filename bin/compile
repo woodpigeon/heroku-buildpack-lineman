@@ -201,6 +201,7 @@ APACHE_PATH="apache"
 PHP_VERSION="5.3.6"
 PHP_PATH="php"
 
+NODE_BUILD_DIR=$BUILD_DIR
 BIN_DIR=$(dirname $0)
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -240,9 +241,9 @@ fi
 # copy the provide configuration and tack on any user configuration in config/httpd.conf
 
 echo "j9 custom override for httpd.conf is this:"
-cat $BUILD_DIR/config/httpd.conf
+cat $NODE_BUILD_DIR/config/httpd.conf
 
-{ cat $BIN_DIR/../conf/httpd.conf; test -f $BUILD_DIR/config/httpd.conf && cat $BUILD_DIR/config/httpd.conf; } > $APACHE_PATH/conf/httpd.conf
+{ cat $BIN_DIR/../conf/httpd.conf; test -f $NODE_BUILD_DIR/config/httpd.conf && cat $NODE_BUILD_DIR/config/httpd.conf; } > $APACHE_PATH/conf/httpd.conf
 
 echo "j10 our new httpd.conf is:"
 cat $APACHE_PATH/conf/httpd.conf
