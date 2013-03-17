@@ -237,8 +237,8 @@ if [ ! -d $APACHE_PATH ]; then
 fi
 
 #copy in the httpd.conf from the buildpack
-cp $BIN_DIR/../conf/httpd.conf $APACHE_PATH/conf/httpd.conf
-
+# copy the provide configuration and tack on any user configuration in config/httpd.conf
+{ cat $BIN_DIR/../conf/httpd.conf; test -f $BUILD_DIR/config/httpd.conf && cat $BUILD_DIR/config/httpd.conf; } > $APACHE_PATH/conf/httpd.conf
 
 cat >>boot.sh <<EOF
 export LD_LIBRARY_PATH=/app/apache/lib/
