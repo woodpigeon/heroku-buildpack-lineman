@@ -238,7 +238,14 @@ fi
 
 #copy in the httpd.conf from the buildpack
 # copy the provide configuration and tack on any user configuration in config/httpd.conf
+
+echo "j9 custom override for httpd.conf is this:"
+cat $BUILD_DIR/config/httpd.conf
+
 { cat $BIN_DIR/../conf/httpd.conf; test -f $BUILD_DIR/config/httpd.conf && cat $BUILD_DIR/config/httpd.conf; } > $APACHE_PATH/conf/httpd.conf
+
+echo "j10 our new httpd.conf is:"
+cat $APACHE_PATH/conf/httpd.conf
 
 cat >>boot.sh <<EOF
 export LD_LIBRARY_PATH=/app/apache/lib/
