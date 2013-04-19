@@ -10,6 +10,12 @@ Example usage:
 
     $ heroku create --stack cedar --buildpack http://github.com/testdouble/heroku-buildpack-lineman.git
 
+Or, for an existing heroku app:
+
+    $ heroku config:set BUILDPACK_URL=http://github.com/testdouble/heroku-buildpack-lineman.git
+
+And the output will look like this when you push to heroku:
+
     $ git push heroku master
     ...
     -----> Heroku receiving push
