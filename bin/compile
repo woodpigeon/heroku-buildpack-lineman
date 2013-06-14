@@ -52,6 +52,7 @@ export GEM_PATH=$GEM_HOME
 mkdir -p $GEM_HOME
 LANG="en_US.UTF-8" gem install bundler sass
 export PATH="$PATH:/app/bin"
+bundle install
 
 #node setup
 
