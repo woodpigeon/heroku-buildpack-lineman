@@ -47,11 +47,11 @@ function indent() {
 # install bundler and sass
 
 echo "-----> Installing bundler and sass"
-export GEM_HOME="$BUILD_DIR/vendor"
+export GEM_HOME="$BUILD_DIR/gems"
 export GEM_PATH=$GEM_HOME
 mkdir -p $GEM_HOME
-
 LANG="en_US.UTF-8" gem install bundler sass
+export PATH="$PATH:/app/bin"
 
 #node setup
 
