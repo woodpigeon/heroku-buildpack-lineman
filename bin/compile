@@ -188,8 +188,14 @@ echo "export PATH=\"\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\"" > $BUILD_DIR/.
 #######################
 
 # build website with lineman
-echo "-----> Building static web assets with lineman"
 cd $BUILD_DIR
+if [ -e Gemfile ]
+then
+  echo "-----> Bundling gems"
+  bundle install
+fi
+
+echo "-----> Building static web assets with lineman"
 mkdir -p dist/js
 $BUILD_DIR/node_modules/.bin/lineman build --stack
 echo "Web assets built" | indent
