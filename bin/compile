@@ -46,8 +46,9 @@ function indent() {
 # ruby setup
 # install bundler and sass
 
-GEM_HOME="$BUILD_DIR/vendor"
-GEM_PATH=$GEM_HOME
+echo "-----> Installing bundler and sass"
+export GEM_HOME="$BUILD_DIR/vendor"
+export GEM_PATH=$GEM_HOME
 mkdir -p $GEM_HOME
 
 LANG="en_US.UTF-8" gem install bundler sass
