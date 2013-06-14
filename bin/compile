@@ -43,6 +43,17 @@ function indent() {
   esac
 }
 
+# ruby setup
+# install bundler and sass
+
+GEM_HOME="$BUILD_DIR/vendor"
+GEM_PATH=$GEM_HOME
+mkdir -p $GEM_HOME
+
+LANG="en_US.UTF-8" gem install bundler sass
+
+#node setup
+
 function run_npm() {
   command="$1"
 
@@ -104,9 +115,6 @@ function package_download() {
   package="http://${S3_BUCKET}.s3.amazonaws.com/$engine-$version.tgz"
   curl $package -s -o - | tar xzf - -C $location
 }
-
-# install bundler and sass
-LANG="en_US.UTF-8" gem install bundler sass
 
 bootstrap_node=$(mktmpdir bootstrap_node)
 package_download "nodejs" "0.4.7" $bootstrap_node
