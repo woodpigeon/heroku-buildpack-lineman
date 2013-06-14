@@ -106,7 +106,7 @@ function package_download() {
 }
 
 # install bundler and sass
-gem install bundler sass
+LANG="en_US.UTF-8" gem install bundler sass
 
 bootstrap_node=$(mktmpdir bootstrap_node)
 package_download "nodejs" "0.4.7" $bootstrap_node
