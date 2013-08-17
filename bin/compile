@@ -212,6 +212,9 @@ mkdir -p dist/js
 $BUILD_DIR/node_modules/.bin/lineman build --stack
 echo "Web assets built" | indent
 
+echo "-----> Removing node_modules from slug"
+rm -rf $BUILD_DIR/node_modules
+
 #######################
 ## 3. Apache Setup   ##
 #######################
