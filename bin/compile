@@ -43,16 +43,6 @@ function indent() {
   esac
 }
 
-# ruby setup
-# install bundler and sass
-
-echo "-----> Installing bundler and sass"
-export GEM_HOME="$BUILD_DIR/gems"
-export GEM_PATH=$GEM_HOME
-mkdir -p $GEM_HOME
-LANG="en_US.UTF-8" gem install bundler sass
-export PATH="/app/bin:$PATH:$GEM_PATH/bin"
-
 #node setup
 
 function run_npm() {
@@ -198,6 +188,19 @@ echo "export PATH=\"\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\"" > $BUILD_DIR/.
 
 # build website with lineman
 cd $BUILD_DIR
+
+# install Bundler and Sass gems unless enableSass is false
+if [ `$BUILD_DIR/node_modules/.bin/lineman config enableSass` != "false" ]
+then
+  echo "-----> Installing bundler and sass gems"
+  export GEM_HOME="$BUILD_DIR/gems"
+  export GEM_PATH=$GEM_HOME
+  mkdir -p $GEM_HOME
+  LANG="en_US.UTF-8" gem install bundler sass
+  export PATH="/app/bin:$PATH:$GEM_PATH/bin"
+fi
+
+
 if [ -e Gemfile ]
 then
   echo "-----> Bundling gems"
