@@ -233,20 +233,7 @@ PHP_PATH="php"
 BIN_DIR=$(dirname $0)
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
-# include .files when moving things around
-shopt -s dotglob
-
 cd $BUILD_DIR
-
-# move app things to www
-mkdir -p $CACHE_DIR/www
-mv * $CACHE_DIR/www
-mv $CACHE_DIR/www .
-
-# keep Procfile
-if [ -f www/Procfile ]; then
-  mv www/Procfile .
-fi
 
 # unpack cache
 for DIR in $APACHE_PATH $PHP_PATH ; do
@@ -265,7 +252,7 @@ fi
 
 #copy in the httpd.conf from the buildpack
 # copy the provide configuration and tack on any user configuration in config/httpd.conf
-{ cat $BIN_DIR/../conf/httpd.conf; test -f $BUILD_DIR/www/config/httpd.conf && cat $BUILD_DIR/www/config/httpd.conf; } > $APACHE_PATH/conf/httpd.conf
+{ cat $BIN_DIR/../conf/httpd.conf; test -f $BUILD_DIR/config/httpd.conf && cat $BUILD_DIR/config/httpd.conf; } > $APACHE_PATH/conf/httpd.conf
 
 cat >>boot.sh <<EOF
 export LD_LIBRARY_PATH=/app/apache/lib/
