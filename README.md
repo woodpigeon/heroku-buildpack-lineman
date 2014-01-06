@@ -102,3 +102,39 @@ And the output will look like this when you push to heroku:
     To git@heroku.com:pacific-fortress-3824.git
        9b88fd7..e4bfa19  HEAD -> master
 
+Apache Modules
+-----
+
+Custom Apache modules saved to a directory named `apache_modules` in your app root will be deployed to Heroku. You'll add need to make the corresponding change to `conf/httpd.conf`, adding a line to load the module. Here's an example that will load the `headers_module`:
+
+```
+LoadModule headers_module  modules/mod_headers.so
+```
+
+__Building Apache Modules__
+
+To build an Apache module, we'll use a Heroku one-off dyno:
+
+```
+$ heroku run bash
+```
+
+Once your one-off dyno is up and running, download a copy the Apache source, matching the version you'll be running in production. This buildpack uses 2.2.19.
+
+```
+$ curl http://archive.apache.org/dist/httpd/httpd-2.2.19.tar.gz | tar zx
+```
+
+Change to the Apache source directory:
+
+```
+$ cd httpd-2.2.19
+```
+
+Build the module with `apxs`
+
+```
+$ /app/apache/bin/apxs -i -c -Wl,lz modules/metadata/mod_headers.c
+```
+
+Last, copy (scp works great) the compiled module from the one-off dyno (`/app/apache/modules`) and commit it to your app's `apache_modules` directory (you might need to create this directory).
