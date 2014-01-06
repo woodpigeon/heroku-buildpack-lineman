@@ -283,7 +283,9 @@ fi
 
 cat >>boot.sh <<EOF
 export LD_LIBRARY_PATH=/app/apache/lib/
-/app/apache/bin/htpasswd -bc /app/.passwords \$USERNAME \$PASSWORD
+if [ -n "$USERNAME" ] && [ -n "$PASSWORD" ]; then
+  /app/apache/bin/htpasswd -bc /app/.passwords \$USERNAME \$PASSWORD
+fi
 sed -i 's/Listen 80/Listen '\$PORT'/' /app/apache/conf/httpd.conf
 echo "Launching apache"
 exec /app/apache/bin/httpd -X
