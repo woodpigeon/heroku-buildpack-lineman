@@ -1,18 +1,18 @@
 Heroku buildpack: Lineman
 =========================
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for [Lineman](https://github.com/testdouble/lineman) apps.
+This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for [Lineman](https://github.com/linemanjs/lineman) apps.
 
 Usage
 -----
 
 Example usage:
 
-    $ heroku create --stack cedar --buildpack http://github.com/testdouble/heroku-buildpack-lineman.git
+    $ heroku create --stack cedar --buildpack http://github.com/linemanjs/heroku-buildpack-lineman.git
 
 Or, for an existing heroku app:
 
-    $ heroku config:set BUILDPACK_URL=http://github.com/testdouble/heroku-buildpack-lineman.git
+    $ heroku config:set BUILDPACK_URL=http://github.com/linemanjs/heroku-buildpack-lineman.git
 
 And the output will look like this when you push to heroku:
 
