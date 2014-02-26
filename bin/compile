@@ -272,7 +272,7 @@ done
 
 # install apache if needed. only if Procfile doesn't have a web process
 HAS_WEB_PROCESS=false
-if [-e "Procile"]
+if [-e "Procile"]; then
   echo "Procile exists...checking for web process"
   if [`grep -o 'web:' Procile`]; then
     echo "Found web process. No need to bundle Apache."
