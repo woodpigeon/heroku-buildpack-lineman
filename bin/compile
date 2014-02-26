@@ -276,7 +276,7 @@ if [ -f Procfile ]; then
   echo "Procile exists...checking for web process"
   if [ `grep -o 'web:' Procfile` ]; then
     echo "Found web process. No need to bundle Apache."
-    APACHE_REQUIREd=false
+    APACHE_REQUIRED=false
   fi
 fi
 
