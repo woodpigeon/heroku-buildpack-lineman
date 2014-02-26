@@ -272,16 +272,15 @@ done
 
 # install apache if needed. only if Procfile doesn't have a web process
 HAS_WEB_PROCESS=false
-PROCFILE="Procile"
-if [ -e "$PROCFILE" ]; then
+if [ -f Procfile ]; then
   echo "Procile exists...checking for web process"
-  if [ `grep -o 'web:' Procile` ]; then
+  if [ `grep -o 'web:' Procfile` ]; then
     echo "Found web process. No need to bundle Apache."
     HAS_WEB_PROCESS=true
   fi
 fi
 
-if [ ! -d $APACHE_PATH ] && [ "$HAS_WEB_PROCESS" != true ]; then
+if [ ! -d $APACHE_PATH ] && [ ! $HAS_WEB_PROCESS ]; then
   APACHE_URL="https://s3.amazonaws.com/php-lp/apache-$APACHE_VERSION.tar.gz"
   echo "-----> Bundling Apache v$APACHE_VERSION"
   curl --silent --max-time 60 --location $APACHE_URL | tar xz
