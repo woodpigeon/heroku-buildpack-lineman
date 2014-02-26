@@ -271,23 +271,23 @@ for DIR in $APACHE_PATH $PHP_PATH ; do
 done
 
 # install apache if needed. only if Procfile doesn't have a web process
-APACHE_REQUIRED=true
+HAS_WEB_PROCESS=false
 if [ -f Procfile ]; then
   echo "Procile exists...checking for web process"
   if [ `grep -o 'web:' Procfile` ]; then
     echo "Found web process. No need to bundle Apache."
-    APACHE_REQUIRED=false
+    HAS_WEB_PROCESS=true
   fi
 fi
 
-if [ ! -d $APACHE_PATH ] && [ $APACHE_REQUIRED ]; then
+if [ ! -d $APACHE_PATH ] && [ ! $HAS_WEB_PROCESS ]; then
   APACHE_URL="https://s3.amazonaws.com/php-lp/apache-$APACHE_VERSION.tar.gz"
   echo "-----> Bundling Apache v$APACHE_VERSION"
   curl --silent --max-time 60 --location $APACHE_URL | tar xz
 fi
 
 
-if [ $APACHE_REQUIRED ]; then
+if [ ! $HAS_WEB_PROCESS ]; then
   #copy in the httpd.conf from the buildpack
   # copy the provided configuration and tack on any user configuration in config/httpd.conf
   { cat $BIN_DIR/../conf/httpd.conf; test -f $BUILD_DIR/config/httpd.conf && cat $BUILD_DIR/config/httpd.conf; } > $APACHE_PATH/conf/httpd.conf
