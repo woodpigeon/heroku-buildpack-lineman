@@ -304,6 +304,8 @@ if [ ! $HAS_WEB_PROCESS ]; then
   echo "Launching apache"
   exec /app/apache/bin/httpd -X
 EOF
-fi
 
   chmod +x boot.sh
+fi
+
+
