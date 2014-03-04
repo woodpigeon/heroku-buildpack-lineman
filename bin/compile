@@ -254,7 +254,7 @@ run_npm "prune --production"
 echo "-----> Checking for Procfile and web process"
 if [ -f Procfile ]; then
   echo "Procile exists...checking for web process" | indent
-  if [ `grep -o 'web:' Procfile` ]; then
+  if [ `grep -o '^web:' Procfile` ]; then
     echo "Found web process. No need to bundle Apache." | indent
     exit 0
   fi
