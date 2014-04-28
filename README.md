@@ -138,3 +138,26 @@ $ /app/apache/bin/apxs -i -c -Wl,lz modules/metadata/mod_headers.c
 ```
 
 Last, copy (scp works great) the compiled module from the one-off dyno (`/app/apache/modules`) and commit it to your app's `apache_modules` directory (you might need to create this directory).
+
+
+HTML5 PushState
+-----
+
+To add support for pushstate urls you can use the mod_rewrite module.  Follow the instructions above to build and add the mod_rewrite to your project.  The only difference to note when building is `mod_rewrite.c` is found in `modules/mappers` instead of `modules/metadata`:
+
+```
+$ /app/apache/bin/apxs -i -c -Wl,lz modules/mappers/mod_rewrite.c
+```
+
+Once you have mod_rewrite.so in your `apache_modules` directory you can add the following rewrite rule to `config/httpd.conf`:
+
+```
+# Handle push state urls
+# any request that is NOT for a file or directory rewrite to index.html
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-f
+    RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} !-d
+    RewriteRule (.*) /index.html [L,QSA]
+</IfModule>
+```
