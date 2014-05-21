@@ -49,7 +49,7 @@ function run_npm() {
   command="$1"
 
   cd $BUILD_DIR
-  HOME="$BUILD_DIR" $VENDORED_NODE/bin/node $VENDORED_NPM/cli.js $command 2>&1 | indent
+  HOME="$BUILD_DIR" npm $command 2>&1 | indent
 
   if [ "${PIPESTATUS[*]}" != "0 0" ]; then
     echo " !     Failed to $command dependencies with npm"
@@ -167,6 +167,8 @@ echo "-----> Fetching Node.js binaries"
 package_download "nodejs" "${NODE_VERSION}" "${VENDORED_NODE}"
 package_download "npm" "${NPM_VERSION}" "${VENDORED_NPM}"
 package_download "scons" "${SCONS_VERSION}" "${VENDORED_SCONS}"
+
+ln -sf $VENDORED_NPM/bin/npm-cli.js $VENDORED_NODE/bin/npm
 
 # vendor node into the slug
 PATH="$BUILD_DIR/bin:$PATH"
