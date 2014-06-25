@@ -18,9 +18,34 @@ unset GIT_DIR
 SCONS_VERSION="1.2.0"
 S3_BUCKET="heroku-buildpack-nodejs"
 
+export_env_dir() {
+  env_dir=$1
+  whitelist_regex=${2:-''}
+  blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+  if [ -d "$env_dir" ]; then
+    for e in $(ls $env_dir); do
+      echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+      export "$e=$(cat $env_dir/$e)"
+      :
+    done
+  fi
+}
+
+
 # parse and derive params
 BUILD_DIR=$1
 CACHE_DIR=$2
+export_env_dir $3
+
+if [ -z "$CLEAR_HEROKU_BUILD_CACHE" ] ; then
+  echo "Reusing previous heroku NPM build cache"
+else
+  echo "Clearing previous build cache in $2"
+  cd $2
+  rm -rf *
+fi
+
+
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
 function error() {
@@ -194,6 +219,7 @@ fi
 
 # install dependencies with npm
 echo "-----> Installing dependencies with npm"
+
 run_npm "install"
 run_npm "rebuild"
 run_npm "prune" #<-- removes any cached dependencies that have been removed
