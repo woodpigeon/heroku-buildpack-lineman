@@ -258,7 +258,7 @@ then
   export GEM_HOME="$BUILD_DIR/gems"
   export GEM_PATH=$GEM_HOME
   mkdir -p $GEM_HOME
-  LANG="en_US.UTF-8" gem install bundler sass
+  LANG="en_US.UTF-8" gem install --no-rdoc --no-ri bundler sass
   export PATH="/app/bin:$PATH:$GEM_PATH/bin"
 fi
 
