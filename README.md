@@ -105,7 +105,7 @@ And the output will look like this when you push to heroku:
 Apache Modules
 -----
 
-Custom Apache modules saved to a directory named `apache_modules` in your app root will be deployed to Heroku. You'll add need to make the corresponding change to `conf/httpd.conf`, adding a line to load the module. Here's an example that will load the `headers_module`:
+Custom Apache modules saved to a directory named `apache_modules` in your app root will be deployed to Heroku (under `apache/modules` in the slug). You'll need to make a corresponding change to `config/httpd.conf` – adding a line to load the module. Here's an example that will load the `headers_module` (assuming that `mod_headers.so` exists under `apache_modules` in your app root):
 
 ```
 LoadModule headers_module  modules/mod_headers.so
