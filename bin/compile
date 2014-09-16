@@ -313,8 +313,10 @@ done
 
 
 if [ ! -d $APACHE_PATH ]; then
-  APACHE_URL="https://s3.amazonaws.com/php-lp/apache-$APACHE_VERSION.tar.gz"
-  echo "-----> Bundling Apache v$APACHE_VERSION"
+  if [ ! -z "$APACHE_URL" ]; then
+    APACHE_URL="https://s3.amazonaws.com/php-lp/apache-$APACHE_VERSION.tar.gz"
+  fi
+  echo "-----> Bundling Apache v$APACHE_VERSION from $APACHE_URL"
   curl --silent --max-time 60 --location $APACHE_URL | tar xz
 fi
 
